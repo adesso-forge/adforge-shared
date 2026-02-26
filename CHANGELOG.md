@@ -1,3 +1,10 @@
+## [1.2.2](https://github.com/adesso-forge/ds-shared/compare/v1.2.1...v1.2.2) (2026-02-26)
+
+
+### Bug Fixes
+
+* pin storybook packages to 10.2.13 ([21559a2](https://github.com/adesso-forge/ds-shared/commit/21559a2c8fafcad7aaacb8e81e10e1c9d9a1ee4d))
+
 ## [1.2.1](https://github.com/adesso-forge/ds-shared/compare/v1.2.0...v1.2.1) (2026-02-26)
 
 
