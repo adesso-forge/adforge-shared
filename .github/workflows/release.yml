@@ -59,12 +59,12 @@ jobs:
     if: needs.release.outputs.released == 'true'
     runs-on: ubuntu-latest
     steps:
-      - name: Dispatch to ds-core
+      - name: Dispatch to adforge-core
         run: |
           VERSION="${{ needs.release.outputs.version }}"
-          gh api repos/adesso-forge/ds-core/dispatches \
-            -f event_type=ds-shared-update \
+          gh api repos/adesso-forge/adforge-core/dispatches \
+            -f event_type=adforge-shared-update \
             -f "client_payload[version]=$VERSION" \
-            || { echo "::error::Failed to dispatch to ds-core — check DS_DISPATCH_TOKEN"; exit 1; }
+            || { echo "::error::Failed to dispatch to adforge-core — check DS_DISPATCH_TOKEN"; exit 1; }
         env:
           GITHUB_TOKEN: ${{ secrets.DS_DISPATCH_TOKEN }}

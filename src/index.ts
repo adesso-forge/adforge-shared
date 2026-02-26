@@ -1,4 +1,4 @@
-// @adesso-forge/ds-shared — public API
+// @adesso-forge/adforge-shared — public API
 
 // Build utilities
 export { createBaseConfig } from './build/vite.config.base.js';

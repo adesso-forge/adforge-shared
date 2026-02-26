@@ -40,10 +40,10 @@ export function createStorybookConfig(
           dedupe: [
             '@awesome.me/webawesome',
             'lit',
-            '@adesso-forge/core-ds',
-            '@adesso-forge/ds-shared',
+            '@adesso-forge/adforge-core',
+            '@adesso-forge/adforge-shared',
           ],
-          // Force bare-specifier imports from linked packages (ds-core, ds-shared)
+          // Force bare-specifier imports from linked packages (adforge-core, adforge-shared)
           // to resolve from this project's node_modules (pnpm isolation fix)
           alias: [
             {

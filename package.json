@@ -1,5 +1,5 @@
 {
-  "name": "@adesso-forge/ds-shared",
+  "name": "@adesso-forge/adforge-shared",
   "version": "1.2.3",
   "description": "Shared build tooling, Storybook config, and token utilities for adesso forge",
   "type": "module",
@@ -54,6 +54,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/adesso-forge/ds-shared.git"
+    "url": "https://github.com/adesso-forge/adforge-shared.git"
   }
 }
