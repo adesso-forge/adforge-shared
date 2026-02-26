@@ -2,7 +2,6 @@ name: Release
 on:
   push:
     branches: [main]
-    paths-ignore: ['*.md']
 jobs:
   release:
     runs-on: ubuntu-latest
@@ -15,16 +14,59 @@ jobs:
           fetch-depth: 0
       - uses: pnpm/action-setup@v4
         with:
-          version: 9
+          version: 10
       - uses: actions/setup-node@v4
         with:
           node-version: 22
           registry-url: 'https://npm.pkg.github.com'
+      - name: Get pnpm store path
+        id: pnpm-cache
+        run: echo "store=$(pnpm store path)" >> "$GITHUB_OUTPUT"
+      - uses: actions/cache@v4
+        with:
+          path: ${{ steps.pnpm-cache.outputs.store }}
+          key: pnpm-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: pnpm-${{ runner.os }}-
       - run: pnpm install --frozen-lockfile
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - run: pnpm build
-      - run: npx semantic-release
+      - name: Release
+        id: semantic
+        run: npx semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Check if released
+        id: check
+        run: |
+          NEW_VERSION=$(node -p "require('./package.json').version")
+          if git tag --list "v$NEW_VERSION" | grep -q .; then
+            echo "released=true" >> "$GITHUB_OUTPUT"
+            echo "version=$NEW_VERSION" >> "$GITHUB_OUTPUT"
+          else
+            echo "released=false" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Report if no release
+        if: steps.check.outputs.released != 'true'
+        run: echo "::warning::No new version released — downstream dispatch skipped"
+    outputs:
+      released: ${{ steps.check.outputs.released }}
+      version: ${{ steps.check.outputs.version }}
+
+  notify-downstream:
+    needs: release
+    if: needs.release.outputs.released == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dispatch to all consuming repos
+        run: |
+          VERSION="${{ needs.release.outputs.version }}"
+          for repo in ds-core ds-alpha ds-beta; do
+            gh api repos/adesso-forge/$repo/dispatches \
+              -f event_type=ds-shared-update \
+              -f "client_payload[version]=$VERSION" \
+              || { echo "::error::Failed to dispatch to $repo — check DS_DISPATCH_TOKEN"; exit 1; }
+          done
+        env:
+          GITHUB_TOKEN: ${{ secrets.DS_DISPATCH_TOKEN }}
