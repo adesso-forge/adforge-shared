@@ -59,14 +59,12 @@ jobs:
     if: needs.release.outputs.released == 'true'
     runs-on: ubuntu-latest
     steps:
-      - name: Dispatch to all consuming repos
+      - name: Dispatch to ds-core
         run: |
           VERSION="${{ needs.release.outputs.version }}"
-          for repo in ds-core ds-alpha ds-beta; do
-            gh api repos/adesso-forge/$repo/dispatches \
-              -f event_type=ds-shared-update \
-              -f "client_payload[version]=$VERSION" \
-              || { echo "::error::Failed to dispatch to $repo — check DS_DISPATCH_TOKEN"; exit 1; }
-          done
+          gh api repos/adesso-forge/ds-core/dispatches \
+            -f event_type=ds-shared-update \
+            -f "client_payload[version]=$VERSION" \
+            || { echo "::error::Failed to dispatch to ds-core — check DS_DISPATCH_TOKEN"; exit 1; }
         env:
           GITHUB_TOKEN: ${{ secrets.DS_DISPATCH_TOKEN }}
