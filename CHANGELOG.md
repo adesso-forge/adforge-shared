@@ -1,3 +1,11 @@
+# [1.3.0](https://github.com/adesso-forge/adforge-shared/compare/v1.2.4...v1.3.0) (2026-02-27)
+
+
+### Features
+
+* add shared ESLint, Prettier, and Vitest configurations ([d94b89f](https://github.com/adesso-forge/adforge-shared/commit/d94b89f278727c98e378cbd0381a8d3f164a24a9))
+* export lint and testing configs from package ([f74b9a4](https://github.com/adesso-forge/adforge-shared/commit/f74b9a4170cafb77aec079c6477825e9c013e4fd))
+
 ## [1.2.4](https://github.com/adesso-forge/adforge-shared/compare/v1.2.3...v1.2.4) (2026-02-26)
 
 
