@@ -15,6 +15,9 @@
     "./components/*": "./dist/components/*.js",
     "./lint/eslint": "./dist/lint/eslint.config.js",
     "./lint/prettier": "./dist/lint/prettier.config.js",
+    "./lint/commitlint": "./dist/lint/commitlint.config.js",
+    "./lint/lint-staged": "./dist/lint/lint-staged.config.js",
+    "./lint/release": "./dist/lint/release.config.js",
     "./testing/vitest": "./dist/testing/vitest.config.js"
   },
   "files": [

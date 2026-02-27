@@ -35,6 +35,9 @@ export { toScss, toTypeScript } from './tokens/export.js';
 export { createEslintConfig } from './lint/eslint.config.js';
 export type { EslintConfigOptions } from './lint/eslint.config.js';
 export { prettierConfig } from './lint/prettier.config.js';
+export { commitlintConfig } from './lint/commitlint.config.js';
+export { lintStagedConfig } from './lint/lint-staged.config.js';
+export { releaseConfig } from './lint/release.config.js';
 
 // Testing config
 export { createVitestConfig } from './testing/vitest.config.js';
